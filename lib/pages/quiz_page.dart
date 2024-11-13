@@ -37,6 +37,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   int _remainingSeconds = 0;
 
   List<String> _currentOptions = [];
+  bool _showOptions = false;
 
   late AnimationController _animationController;
   late final AudioPlayer _audioPlayer;
@@ -130,10 +131,10 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           _currentQuestionIndex++;
           _selectedOptionIndex = null;
           _hasSelectedOptions = false;
+          _showOptions = false;
         });
         _generateOptions();
         _animationController.reset();
-        _animationController.forward();
       } else {
         int stars = _calculateStars(
           _totalAnsweredTime,
@@ -189,78 +190,92 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
-            children: [
-              for (int index = 0; index < _currentOptions.length; index++)
-                Column(
-                  children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        elevation: const WidgetStatePropertyAll(0),
-                        shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: BorderSide(
-                              color: _selectedOptionIndex == index
-                                  ? _isCorrectAnswer
-                                      ? Colors.green
-                                      : Colors.red
-                                  : Colors.transparent,
+            children: _showOptions
+                ? [
+                    for (int index = 0; index < _currentOptions.length; index++)
+                      Column(
+                        children: [
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              elevation: const WidgetStatePropertyAll(0),
+                              shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  side: BorderSide(
+                                    color: _selectedOptionIndex == index
+                                        ? _isCorrectAnswer
+                                            ? Colors.green
+                                            : Colors.red
+                                        : Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all(
+                                _selectedOptionIndex == index
+                                    ? _isCorrectAnswer
+                                        ? Colors.green.withOpacity(0.5)
+                                        : Colors.red.withOpacity(0.5)
+                                    : Colors.transparent,
+                              ),
+                            ),
+                            onPressed: () async {
+                              if (!_hasSelectedOptions) {
+                                _selectedOptionIndex = index;
+                                _isCorrectAnswer = _currentOptions[index] ==
+                                    _questions[_currentQuestionIndex].answer;
+                                _animationController.forward();
+                                if (_isCorrectAnswer) {
+                                  double answeredTime =
+                                      _animationController.value *
+                                          widget.quizLevelInfo.timePerQuestion;
+                                  _totalAnsweredTime += answeredTime;
+                                  _addCoins(_animationController.value);
+                                  _correntAnswers++;
+                                  await _audioPlayer.play(AssetSource(
+                                      "audio/game_sounds/right.mp3"));
+                                } else {
+                                  _totalAnsweredTime +=
+                                      widget.quizLevelInfo.timePerQuestion;
+                                  await _audioPlayer.play(AssetSource(
+                                      "audio/game_sounds/wrong.mp3"));
+                                }
+                                _hasSelectedOptions = true;
+                                _animationController.stop();
+                                setState(() {});
+                              }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${index + 1}. ${_currentOptions[index]}",
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 18,
+                                    fontFamily: "Inter",
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                        backgroundColor: WidgetStateProperty.all(
-                          _selectedOptionIndex == index
-                              ? _isCorrectAnswer
-                                  ? Colors.green.withOpacity(0.5)
-                                  : Colors.red.withOpacity(0.5)
-                              : Colors.transparent,
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (!_hasSelectedOptions) {
-                          _selectedOptionIndex = index;
-                          _isCorrectAnswer = _currentOptions[index] ==
-                              _questions[_currentQuestionIndex].answer;
-                          if (_isCorrectAnswer) {
-                            double answeredTime = _animationController.value *
-                                widget.quizLevelInfo.timePerQuestion;
-                            _totalAnsweredTime += answeredTime;
-                            _addCoins(_animationController.value);
-                            _correntAnswers++;
-                            await _audioPlayer.play(
-                                AssetSource("audio/game_sounds/right.mp3"));
-                          } else {
-                            _totalAnsweredTime +=
-                                widget.quizLevelInfo.timePerQuestion;
-                            await _audioPlayer.play(
-                                AssetSource("audio/game_sounds/wrong.mp3"));
-                          }
-                          _hasSelectedOptions = true;
-                          _animationController.stop();
-                          setState(() {});
-                        }
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "${index + 1}. ${_currentOptions[index]}",
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 18,
-                              fontFamily: "Inter",
-                              fontWeight: FontWeight.w600,
-                            ),
+                          const Divider(
+                            color: Colors.black26,
                           ),
                         ],
                       ),
-                    ),
-                    const Divider(
-                      color: Colors.black26,
+                  ]
+                : [
+                    const Text(
+                      "Trebuie să apeși butonul de redare pentru a vedea opțiunile.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     ),
                   ],
-                ),
-            ],
           ),
         ),
       ],
@@ -402,6 +417,9 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                     onPressed: () async {
                       if (!_hasSelectedOptions) {
                         _animationController.forward();
+                        setState(() {
+                          _showOptions = true;
+                        });
                       }
                       await _playSound(
                           _questions[_currentQuestionIndex].assetFilePath);
