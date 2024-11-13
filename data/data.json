@@ -1,0 +1,588 @@
+{
+    "subjects": [
+        {
+            "id": "Subject1",
+            "name": "Limba română",
+            "questionCategories": [
+                {
+                    "id": "1A",
+                    "questions": [
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/A.mp3",
+                            "answer": "A"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/A1.mp3",
+                            "answer": "Ă"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/A2.mp3",
+                            "answer": "Â"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/B.mp3",
+                            "answer": "B"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/C.mp3",
+                            "answer": "C"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/D.mp3",
+                            "answer": "D"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/E.mp3",
+                            "answer": "E"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/F.mp3",
+                            "answer": "F"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/G.mp3",
+                            "answer": "G"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/H.mp3",
+                            "answer": "H"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/I.mp3",
+                            "answer": "I"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/I1.mp3",
+                            "answer": "Î"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/J.mp3",
+                            "answer": "J"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/K.mp3",
+                            "answer": "K"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/L.mp3",
+                            "answer": "L"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/M.mp3",
+                            "answer": "M"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/N.mp3",
+                            "answer": "N"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/O.mp3",
+                            "answer": "O"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/P.mp3",
+                            "answer": "P"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/Q.mp3",
+                            "answer": "Q"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/R.mp3",
+                            "answer": "R"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/S.mp3",
+                            "answer": "S"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/S1.mp3",
+                            "answer": "Ș"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/T.mp3",
+                            "answer": "T"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/T1.mp3",
+                            "answer": "Ț"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/U.mp3",
+                            "answer": "U"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/V.mp3",
+                            "answer": "V"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/W.mp3",
+                            "answer": "W"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/X.mp3",
+                            "answer": "X"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/Y.mp3",
+                            "answer": "Y"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/Z.mp3",
+                            "answer": "Z"
+                        }
+                    ],
+                    "options": [
+                        "A",
+                        "Ă",
+                        "Â",
+                        "B",
+                        "C",
+                        "D",
+                        "E",
+                        "F",
+                        "G",
+                        "H",
+                        "I",
+                        "Î",
+                        "J",
+                        "K",
+                        "L",
+                        "M",
+                        "N",
+                        "O",
+                        "P",
+                        "Q",
+                        "R",
+                        "S",
+                        "Ș",
+                        "T",
+                        "Ț",
+                        "U",
+                        "V",
+                        "W",
+                        "X",
+                        "Y",
+                        "Z"
+                    ]
+                },
+                {
+                    "id": "1B",
+                    "questions": [
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/A.mp3",
+                            "answer": "a"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/A1.mp3",
+                            "answer": "ă"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/A2.mp3",
+                            "answer": "â"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/B.mp3",
+                            "answer": "b"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/C.mp3",
+                            "answer": "c"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/D.mp3",
+                            "answer": "d"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/E.mp3",
+                            "answer": "e"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/F.mp3",
+                            "answer": "f"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/G.mp3",
+                            "answer": "g"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/H.mp3",
+                            "answer": "h"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/I.mp3",
+                            "answer": "i"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/I1.mp3",
+                            "answer": "î"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/J.mp3",
+                            "answer": "j"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/K.mp3",
+                            "answer": "k"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/L.mp3",
+                            "answer": "l"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/M.mp3",
+                            "answer": "m"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/N.mp3",
+                            "answer": "n"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/O.mp3",
+                            "answer": "o"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/P.mp3",
+                            "answer": "p"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/Q.mp3",
+                            "answer": "q"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/R.mp3",
+                            "answer": "r"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/S.mp3",
+                            "answer": "s"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/S1.mp3",
+                            "answer": "ș"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/T.mp3",
+                            "answer": "t"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/T1.mp3",
+                            "answer": "ț"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/U.mp3",
+                            "answer": "u"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/V.mp3",
+                            "answer": "v"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/W.mp3",
+                            "answer": "w"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/X.mp3",
+                            "answer": "x"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/Y.mp3",
+                            "answer": "y"
+                        },
+                        {
+                            "type": 1,
+                            "text": "",
+                            "asset": "audio/Z.mp3",
+                            "answer": "z"
+                        }
+                    ],
+                    "options": [
+                        "a",
+                        "ă",
+                        "â",
+                        "b",
+                        "c",
+                        "d",
+                        "e",
+                        "f",
+                        "g",
+                        "h",
+                        "i",
+                        "î",
+                        "j",
+                        "k",
+                        "l",
+                        "m",
+                        "n",
+                        "o",
+                        "p",
+                        "q",
+                        "r",
+                        "s",
+                        "ș",
+                        "t",
+                        "ț",
+                        "u",
+                        "v",
+                        "w",
+                        "x",
+                        "y",
+                        "z"
+                    ]
+                }
+            ],
+            "chapters": [
+                {
+                    "id": "Chapter1",
+                    "title": "Capitolul de învățare 1.",
+                    "name": "Alfabetul limbii române",
+                    "status": 0,
+                    "quizLevels": [
+                        {
+                            "title": "Testul Nr.1",
+                            "name": "Litere mari: sunete de bază",
+                            "timePerQuestion": 15,
+                            "questions": 6,
+                            "questionCategory": "1A",
+                            "options": 2
+                        },
+                        {
+                            "title": "Testul Nr.2",
+                            "name": "Litere mici: sunete de bază",
+                            "timePerQuestion": 15,
+                            "questions": 6,
+                            "questionCategory": "1B",
+                            "options": 2
+                        },
+                        {
+                            "title": "Testul Nr.3",
+                            "name": "Mix: recunoaștere rapidă",
+                            "timePerQuestion": 12,
+                            "questions": 8,
+                            "questionCategory": "1A",
+                            "options": 3
+                        },
+                        {
+                            "title": "Testul Nr.4",
+                            "name": "Litere similare: sunete confuze",
+                            "timePerQuestion": 12,
+                            "questions": 10,
+                            "questionCategory": "1B",
+                            "options": 4
+                        },
+                        {
+                            "title": "Testul Nr.5",
+                            "name": "Dificultate medie: sunete mixte",
+                            "timePerQuestion": 10,
+                            "questions": 12,
+                            "questionCategory": "1A",
+                            "options": 4
+                        },
+                        {
+                            "title": "Testul Nr.6",
+                            "name": "Dificultate avansată: litere mici",
+                            "timePerQuestion": 8,
+                            "questions": 15,
+                            "questionCategory": "1B",
+                            "options": 4
+                        },
+                        {
+                            "title": "Testul Nr.7",
+                            "name": "Test final: Alfabet complet",
+                            "timePerQuestion": 6,
+                            "questions": 20,
+                            "questionCategory": "1A",
+                            "options": 4
+                        }
+                    ]
+                },
+                {
+                    "id": "Chapter2",
+                    "title": "Capitolul de învățare 2.",
+                    "name": "Exerciții avansate de alfabet",
+                    "status": 2,
+                    "quizLevels": [
+                        {
+                            "title": "Testul Nr.1",
+                            "name": "Sunete mari: recunoaștere rapidă",
+                            "timePerQuestion": 12,
+                            "questions": 8,
+                            "questionCategory": "1A",
+                            "options": 3
+                        },
+                        {
+                            "title": "Testul Nr.2",
+                            "name": "Sunete mici: identificare corectă",
+                            "timePerQuestion": 10,
+                            "questions": 10,
+                            "questionCategory": "1B",
+                            "options": 3
+                        },
+                        {
+                            "title": "Testul Nr.3",
+                            "name": "Litere mari și mici mixte",
+                            "timePerQuestion": 8,
+                            "questions": 12,
+                            "questionCategory": "1A",
+                            "options": 4
+                        },
+                        {
+                            "title": "Testul Nr.4",
+                            "name": "Sunete similare: litere complexe",
+                            "timePerQuestion": 8,
+                            "questions": 15,
+                            "questionCategory": "1B",
+                            "options": 4
+                        },
+                        {
+                            "title": "Testul Nr.5",
+                            "name": "Test rapid: Alfabet complet",
+                            "timePerQuestion": 6,
+                            "questions": 18,
+                            "questionCategory": "1A",
+                            "options": 4
+                        },
+                        {
+                            "title": "Testul Nr.6",
+                            "name": "Provocare alfabetică: sunete mixte",
+                            "timePerQuestion": 5,
+                            "questions": 20,
+                            "questionCategory": "1B",
+                            "options": 4
+                        },
+                        {
+                            "title": "Testul Nr.7",
+                            "name": "Test final avansat: toate literele",
+                            "timePerQuestion": 4,
+                            "questions": 25,
+                            "questionCategory": "1A",
+                            "options": 4
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
