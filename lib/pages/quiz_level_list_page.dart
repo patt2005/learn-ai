@@ -92,7 +92,7 @@ class _QuizLevelListPageState extends State<QuizLevelListPage> {
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.only(bottom: screenSize.height * 0.05),
                     itemCount: foundChapter.quizLevels.length,
                     itemBuilder: (context, index) {
                       final quizLevel = foundChapter.quizLevels[index];
@@ -105,19 +105,17 @@ class _QuizLevelListPageState extends State<QuizLevelListPage> {
                           : CupertinoIcons.play;
 
                       return GestureDetector(
-                        onTap: isDone
-                            ? null
-                            : () async {
-                                await Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (context) => QuizPage(
-                                      quizLevelInfo: quizLevel,
-                                      chapter: foundChapter,
-                                      subject: foundSubject,
-                                    ),
-                                  ),
-                                );
-                              },
+                        onTap: () async {
+                          await Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) => QuizPage(
+                                quizLevelInfo: quizLevel,
+                                chapter: foundChapter,
+                                subject: foundSubject,
+                              ),
+                            ),
+                          );
+                        },
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 10),
                           padding: const EdgeInsets.all(15),
@@ -149,6 +147,49 @@ class _QuizLevelListPageState extends State<QuizLevelListPage> {
                                         fontSize: 18,
                                       ),
                                     ),
+                                    const SizedBox(height: 8),
+                                    if (isDone)
+                                      Row(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                CupertinoIcons.star_fill,
+                                                color: Colors.yellow,
+                                                size: 16,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                "${quizLevel.stars ?? 0} stele",
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                CupertinoIcons.question,
+                                                color: Colors.amber,
+                                                size: 18,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                "${quizLevel.answeredQuestions ?? 0} / ${quizLevel.questions} corecte",
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                   ],
                                 ),
                               ),

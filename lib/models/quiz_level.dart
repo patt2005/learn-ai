@@ -8,6 +8,8 @@ class QuizLevel {
   final int options;
   final String title;
   final String name;
+  int? answeredQuestions;
+  int? stars;
 
   QuizLevel({
     required this.timePerQuestion,
@@ -17,6 +19,8 @@ class QuizLevel {
     required this.name,
     required this.questionCategoryId,
     this.isDone = false,
+    this.answeredQuestions,
+    this.stars,
   });
 
   static Map<String, dynamic> toJson(QuizLevel quizLevel) {
@@ -28,6 +32,8 @@ class QuizLevel {
       "questions": quizLevel.questions,
       "questionCategory": quizLevel.questionCategoryId,
       "options": quizLevel.options,
+      "answeredQuestions": quizLevel.answeredQuestions ?? 0,
+      "stars": quizLevel.stars ?? 0,
     };
   }
 
@@ -40,6 +46,8 @@ class QuizLevel {
       title: jsonData["title"],
       name: jsonData["name"],
       isDone: jsonData["isDone"] ?? false,
+      answeredQuestions: jsonData["answeredQuestions"] ?? 0,
+      stars: jsonData["stars"] ?? 0,
     );
   }
 }

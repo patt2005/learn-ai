@@ -44,7 +44,12 @@ class _ResultsPageState extends State<ResultsPage> {
   void _saveProgress() async {
     if (widget.stars >= 2) {
       final provider = Provider.of<GameProvider>(context, listen: false);
-      await provider.saveQuizLevelProgress(widget.category, widget.quizLevel);
+      await provider.saveQuizLevelProgress(
+        widget.category,
+        widget.quizLevel,
+        widget.answeredQuestions,
+        widget.stars,
+      );
     }
   }
 

@@ -267,7 +267,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                   ]
                 : [
                     const Text(
-                      "Trebuie să apeși butonul de redare pentru a vedea opțiunile.",
+                      "Trebuie să apeși butonul de play pentru a vedea opțiunile.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black54,

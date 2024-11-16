@@ -63,13 +63,15 @@ class GameProvider extends ChangeNotifier {
     return null;
   }
 
-  Future<void> saveQuizLevelProgress(
-      Chapter chapter, QuizLevel quizLevel) async {
+  Future<void> saveQuizLevelProgress(Chapter chapter, QuizLevel quizLevel,
+      int answeredQuestions, int stars) async {
     final foundCategory = _subjects
         .expand((subject) => subject.chapters)
         .firstWhere((e) => e == chapter);
     final foundQuizLevel =
         foundCategory.quizLevels.firstWhere((e) => e == quizLevel);
+    foundQuizLevel.answeredQuestions = answeredQuestions;
+    foundQuizLevel.stars = stars;
 
     foundQuizLevel.isDone = true;
 
