@@ -22,12 +22,6 @@
                         {
                             "type": 1,
                             "text": "",
-                            "asset": "audio/A2.mp3",
-                            "answer": "Â"
-                        },
-                        {
-                            "type": 1,
-                            "text": "",
                             "asset": "audio/B.mp3",
                             "answer": "B"
                         },
@@ -242,12 +236,6 @@
                             "text": "",
                             "asset": "audio/A1.mp3",
                             "answer": "ă"
-                        },
-                        {
-                            "type": 1,
-                            "text": "",
-                            "asset": "audio/A2.mp3",
-                            "answer": "â"
                         },
                         {
                             "type": 1,
@@ -3017,7 +3005,7 @@
                         {
                             "type": 1,
                             "text": "Care este cuvântul brâu?",
-                            "asset": "audio/bra2u.mp3",
+                            "asset": "audio/bra1u.mp3",
                             "answer": "brâu"
                         },
                         {
@@ -3047,7 +3035,7 @@
                         {
                             "type": 1,
                             "text": "Care este cuvântul câte?",
-                            "asset": "audio/ca2te.mp3",
+                            "asset": "audio/ca1te.mp3",
                             "answer": "câte"
                         },
                         {
@@ -3179,7 +3167,7 @@
                         {
                             "type": 1,
                             "text": "Care este cuvântul frâu?",
-                            "asset": "audio/fra2u.mp3",
+                            "asset": "audio/fra1u.mp3",
                             "answer": "frâu"
                         },
                         {

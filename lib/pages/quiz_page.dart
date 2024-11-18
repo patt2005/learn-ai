@@ -432,7 +432,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                   ),
                   const Expanded(
                     child: Text(
-                      "Atingeți butonul pentru a asculta suntetul.",
+                      "Atingeți butonul pentru a asculta sunetul.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
