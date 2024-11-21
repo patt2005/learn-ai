@@ -25,57 +25,55 @@ class _ChapterListPageState extends State<ChapterListPage> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: screenSize.height * 0.08),
-              Stack(
-                children: [
-                  Positioned(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(9),
-                        decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 27,
-                        ),
+        child: Column(
+          children: [
+            SizedBox(height: screenSize.height * 0.08),
+            Stack(
+              children: [
+                Positioned(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(9),
+                      decoration: BoxDecoration(
+                        color: kPrimaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 27,
                       ),
                     ),
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: screenSize.height * 0.055),
-                      const Text(
-                        "Capitole",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: screenSize.height * 0.055),
+                    const Text(
+                      "Capitole",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: screenSize.height * 0.03),
-              Consumer<GameProvider>(
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: screenSize.height * 0.03),
+            Expanded(
+              child: Consumer<GameProvider>(
                 builder: (context, value, child) {
                   Subject foundSubject = value.subjects
                       .firstWhere((e) => e.id == widget.subjectId);
 
                   return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemCount: foundSubject.chapters.length,
                     itemBuilder: (context, index) {
@@ -87,8 +85,8 @@ class _ChapterListPageState extends State<ChapterListPage> {
                   );
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

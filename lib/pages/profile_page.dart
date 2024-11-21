@@ -39,14 +39,17 @@ class _ProfilePageState extends State<ProfilePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    chapter.name,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17,
+                  Expanded(
+                    child: Text(
+                      chapter.name,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
+                  const SizedBox(width: 10),
                   Text(
                     "${chapter.levelsDone}/${chapter.quizLevels.length} teste",
                     style: const TextStyle(

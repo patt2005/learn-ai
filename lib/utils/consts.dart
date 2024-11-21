@@ -14,6 +14,11 @@ enum QuestionType {
   audio,
 }
 
+enum OptionType {
+  pickable,
+  input,
+}
+
 Future<bool> isFirstAppOpen() async {
   final prefs = await SharedPreferences.getInstance();
   bool? firstOpen = prefs.getBool("open") ?? true;

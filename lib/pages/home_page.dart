@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              SizedBox(height: screenSize.height * 0.02),
+              SizedBox(height: screenSize.height * 0.015),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 30),
                 child: const Text(

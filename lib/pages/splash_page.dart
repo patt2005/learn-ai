@@ -26,8 +26,8 @@ class _SplashPageState extends State<SplashPage> {
   void _navigate() async {
     final provider = Provider.of<GameProvider>(context, listen: false);
     bool isFirstOpen = await isFirstAppOpen();
+    await provider.loadData(isFirstOpen);
     if (isFirstOpen) {
-      await provider.loadDataFromServer();
       await Future.delayed(
         const Duration(seconds: 2),
         () => Navigator.of(context).pushReplacement(
@@ -37,7 +37,6 @@ class _SplashPageState extends State<SplashPage> {
         ),
       );
     } else {
-      await provider.loadDataFromClient();
       await Future.delayed(
         const Duration(seconds: 2),
         () => Navigator.of(context).pushReplacement(

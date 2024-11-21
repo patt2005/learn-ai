@@ -5,20 +5,16 @@ class Subject {
   final String id;
   final String name;
   final List<Chapter> chapters;
-  List<QuestionCategory> questionCategories;
+  List<QuestionCategory> questionCategories = [];
 
   Subject({
     required this.name,
     required this.chapters,
     required this.id,
-    required this.questionCategories,
   });
 
   static Subject fromJson(Map<String, dynamic> jsonData) {
     return Subject(
-      questionCategories: (jsonData["questionCategories"] as List<dynamic>)
-          .map((e) => QuestionCategory.fromJson(e))
-          .toList(),
       id: jsonData["id"],
       name: jsonData["name"],
       chapters: (jsonData["chapters"] as List<dynamic>)

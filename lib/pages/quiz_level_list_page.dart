@@ -29,60 +29,60 @@ class _QuizLevelListPageState extends State<QuizLevelListPage> {
       backgroundColor: kBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: screenSize.height * 0.08),
-              Stack(
-                children: [
-                  Positioned(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(9),
-                        decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 27,
-                        ),
+        child: Column(
+          children: [
+            SizedBox(height: screenSize.height * 0.08),
+            Stack(
+              children: [
+                Positioned(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(9),
+                      decoration: BoxDecoration(
+                        color: kPrimaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 27,
                       ),
                     ),
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: screenSize.height * 0.055),
-                      const Text(
-                        "Lecții",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: screenSize.height * 0.05),
-              Text(
-                "Testează-ți cunoștințele acumulate!",
-                style: TextStyle(
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Jersey20",
-                  fontSize: 24,
                 ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: screenSize.height * 0.055),
+                    const Text(
+                      "Lecții",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: screenSize.height * 0.03),
+            Text(
+              "Testează-ți cunoștințele acumulate!",
+              style: TextStyle(
+                color: kPrimaryColor,
+                fontWeight: FontWeight.w400,
+                fontFamily: "Jersey20",
+                fontSize: 24,
               ),
-              SizedBox(height: screenSize.height * 0.03),
-              Consumer<GameProvider>(
+            ),
+            SizedBox(height: screenSize.height * 0.02),
+            Expanded(
+              child: Consumer<GameProvider>(
                 builder: (context, value, child) {
                   Subject foundSubject = value.subjects
                       .firstWhere((e) => e.id == widget.subjectId);
@@ -90,8 +90,6 @@ class _QuizLevelListPageState extends State<QuizLevelListPage> {
                       .firstWhere((e) => e.id == widget.chapterId);
 
                   return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
                     padding: EdgeInsets.only(bottom: screenSize.height * 0.05),
                     itemCount: foundChapter.quizLevels.length,
                     itemBuilder: (context, index) {
@@ -220,8 +218,8 @@ class _QuizLevelListPageState extends State<QuizLevelListPage> {
                   );
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

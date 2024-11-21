@@ -39,6 +39,8 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   List<String> _currentOptions = [];
   bool _showOptions = false;
 
+  final TextEditingController _textController = TextEditingController();
+
   late AnimationController _animationController;
   late final AudioPlayer _audioPlayer;
 
@@ -69,6 +71,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
       })
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
+          _audioPlayer.play(AssetSource("audio/game_sounds/wrong.mp3"));
           setState(() {
             _totalAnsweredTime += widget.quizLevelInfo.timePerQuestion;
             _hasSelectedOptions = true;
@@ -99,21 +102,24 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   }
 
   void _generateOptions() {
-    List<String> options = [_questions[_currentQuestionIndex].answer];
+    final optionType = _questions[_currentQuestionIndex].optionType;
+    if (optionType == OptionType.pickable) {
+      List<String> options = [_questions[_currentQuestionIndex].answer];
 
-    while (options.length < widget.quizLevelInfo.options) {
-      String randomOption = _questionCategory
-          .options[Random().nextInt(_questionCategory.options.length)];
+      while (options.length < widget.quizLevelInfo.options) {
+        String randomOption = _questionCategory
+            .options[Random().nextInt(_questionCategory.options.length)];
 
-      if (!options.contains(randomOption)) {
-        options.add(randomOption);
+        if (!options.contains(randomOption)) {
+          options.add(randomOption);
+        }
       }
-    }
 
-    options.shuffle();
-    setState(() {
-      _currentOptions = options;
-    });
+      options.shuffle();
+      setState(() {
+        _currentOptions = options;
+      });
+    }
   }
 
   Future<void> _playSound(String audioPath) async {
@@ -127,6 +133,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   void _onNextQuestion() async {
     if (_selectedOptionIndex != null || _hasSelectedOptions) {
       if (_currentQuestionIndex < _questions.length - 1) {
+        _textController.clear();
         setState(() {
           _currentQuestionIndex++;
           _selectedOptionIndex = null;
@@ -171,10 +178,123 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   }
 
   Widget _buildOptionsList() {
+    if (_questions[_currentQuestionIndex].optionType == OptionType.pickable) {
+      return Column(
+        children: [
+          const Text(
+            "Selectează varianta corectă",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black38,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: screenSize.height * 0.01),
+          Container(
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF4F4F4),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              children: _showOptions
+                  ? [
+                      for (int index = 0;
+                          index < _currentOptions.length;
+                          index++)
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                elevation: const WidgetStatePropertyAll(0),
+                                shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    side: BorderSide(
+                                      color: _selectedOptionIndex == index
+                                          ? _isCorrectAnswer
+                                              ? Colors.green
+                                              : Colors.red
+                                          : Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all(
+                                  _selectedOptionIndex == index
+                                      ? _isCorrectAnswer
+                                          ? Colors.green.withOpacity(0.5)
+                                          : Colors.red.withOpacity(0.5)
+                                      : Colors.transparent,
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (!_hasSelectedOptions) {
+                                  _selectedOptionIndex = index;
+                                  _isCorrectAnswer = _currentOptions[index] ==
+                                      _questions[_currentQuestionIndex].answer;
+                                  _animationController.forward();
+                                  if (_isCorrectAnswer) {
+                                    double answeredTime = _animationController
+                                            .value *
+                                        widget.quizLevelInfo.timePerQuestion;
+                                    _totalAnsweredTime += answeredTime;
+                                    _addCoins(_animationController.value);
+                                    _correntAnswers++;
+                                    await _audioPlayer.play(AssetSource(
+                                        "audio/game_sounds/right.mp3"));
+                                  } else {
+                                    _totalAnsweredTime +=
+                                        widget.quizLevelInfo.timePerQuestion;
+                                    await _audioPlayer.play(AssetSource(
+                                        "audio/game_sounds/wrong.mp3"));
+                                  }
+                                  _hasSelectedOptions = true;
+                                  _animationController.stop();
+                                  setState(() {});
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${index + 1}. ${_currentOptions[index]}",
+                                    style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 18,
+                                      fontFamily: "Inter",
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Divider(
+                              color: Colors.black26,
+                            ),
+                          ],
+                        ),
+                    ]
+                  : [
+                      const Text(
+                        "Trebuie să apeși butonul de play pentru a vedea opțiunile.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+            ),
+          ),
+        ],
+      );
+    }
     return Column(
       children: [
         const Text(
-          "Selectează varianta corectă",
+          "Introdu răspunsul corect",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.black38,
@@ -183,101 +303,66 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           ),
         ),
         SizedBox(height: screenSize.height * 0.01),
-        Container(
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF4F4F4),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            children: _showOptions
-                ? [
-                    for (int index = 0; index < _currentOptions.length; index++)
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ButtonStyle(
-                              elevation: const WidgetStatePropertyAll(0),
-                              shape: WidgetStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  side: BorderSide(
-                                    color: _selectedOptionIndex == index
-                                        ? _isCorrectAnswer
-                                            ? Colors.green
-                                            : Colors.red
-                                        : Colors.transparent,
-                                  ),
-                                ),
-                              ),
-                              backgroundColor: WidgetStateProperty.all(
-                                _selectedOptionIndex == index
-                                    ? _isCorrectAnswer
-                                        ? Colors.green.withOpacity(0.5)
-                                        : Colors.red.withOpacity(0.5)
-                                    : Colors.transparent,
-                              ),
-                            ),
-                            onPressed: () async {
-                              if (!_hasSelectedOptions) {
-                                _selectedOptionIndex = index;
-                                _isCorrectAnswer = _currentOptions[index] ==
-                                    _questions[_currentQuestionIndex].answer;
-                                _animationController.forward();
-                                if (_isCorrectAnswer) {
-                                  double answeredTime =
-                                      _animationController.value *
-                                          widget.quizLevelInfo.timePerQuestion;
-                                  _totalAnsweredTime += answeredTime;
-                                  _addCoins(_animationController.value);
-                                  _correntAnswers++;
-                                  await _audioPlayer.play(AssetSource(
-                                      "audio/game_sounds/right.mp3"));
-                                } else {
-                                  _totalAnsweredTime +=
-                                      widget.quizLevelInfo.timePerQuestion;
-                                  await _audioPlayer.play(AssetSource(
-                                      "audio/game_sounds/wrong.mp3"));
-                                }
-                                _hasSelectedOptions = true;
-                                _animationController.stop();
-                                setState(() {});
-                              }
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${index + 1}. ${_currentOptions[index]}",
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 18,
-                                    fontFamily: "Inter",
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Divider(
-                            color: Colors.black26,
-                          ),
-                        ],
-                      ),
-                  ]
-                : [
-                    const Text(
-                      "Trebuie să apeși butonul de play pentru a vedea opțiunile.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
+        TextField(
+          onSubmitted: (value) async {
+            if (!_hasSelectedOptions) {
+              _isCorrectAnswer =
+                  value == _questions[_currentQuestionIndex].answer;
+              _animationController.forward();
+              if (_isCorrectAnswer) {
+                double answeredTime = _animationController.value *
+                    widget.quizLevelInfo.timePerQuestion;
+                _totalAnsweredTime += answeredTime;
+                _addCoins(_animationController.value);
+                _correntAnswers++;
+                await _audioPlayer
+                    .play(AssetSource("audio/game_sounds/right.mp3"));
+              } else {
+                _totalAnsweredTime += widget.quizLevelInfo.timePerQuestion;
+                await _audioPlayer
+                    .play(AssetSource("audio/game_sounds/wrong.mp3"));
+              }
+              _hasSelectedOptions = true;
+              _animationController.stop();
+              setState(() {});
+            }
+          },
+          controller: _textController,
+          decoration: InputDecoration(
+            hintText: "Răspunsul tău aici...",
+            hintStyle: const TextStyle(color: Colors.black38),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide:
+                  const BorderSide(color: Colors.blueAccent, width: 1.5),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                  color: _hasSelectedOptions
+                      ? _isCorrectAnswer
+                          ? Colors.green
+                          : Colors.red
+                      : Colors.grey,
+                  width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                  color: _hasSelectedOptions
+                      ? _isCorrectAnswer
+                          ? Colors.green
+                          : Colors.red
+                      : Colors.grey,
+                  width: 1.5),
+            ),
           ),
         ),
+        SizedBox(height: screenSize.height * 0.02),
       ],
     );
   }

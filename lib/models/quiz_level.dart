@@ -57,12 +57,14 @@ class Question {
   final String answer;
   final QuestionType questionTYpe;
   final String text;
+  final OptionType optionType;
 
   Question({
     required this.text,
     required this.assetFilePath,
     required this.answer,
     required this.questionTYpe,
+    required this.optionType,
   });
 
   static Question fromJson(Map<String, dynamic> jsonData) {
@@ -71,6 +73,7 @@ class Question {
       assetFilePath: jsonData["asset"],
       answer: jsonData["answer"],
       questionTYpe: QuestionType.values[jsonData["type"]],
+      optionType: OptionType.values[jsonData["optionType"] ?? 0],
     );
   }
 
@@ -80,6 +83,7 @@ class Question {
       "answer": questionData.answer,
       "text": questionData.text,
       "type": questionData.questionTYpe.index,
+      "optionType": questionData.optionType.index,
     };
   }
 }

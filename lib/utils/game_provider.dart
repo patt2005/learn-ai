@@ -1,12 +1,10 @@
-import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:lingo_ai_app/models/chapter.dart';
 import 'package:lingo_ai_app/models/quiz_level.dart';
 import 'package:lingo_ai_app/models/subject.dart';
+import 'package:lingo_ai_app/services/subject_service.dart';
 import 'package:lingo_ai_app/utils/consts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class GameProvider extends ChangeNotifier {
   String _nickname = "";
@@ -14,6 +12,8 @@ class GameProvider extends ChangeNotifier {
 
   String _profileImagePath = "";
   String get profileImagePath => _profileImagePath;
+
+  final SubjectService _subjectService = SubjectService();
 
   final List<String> _advicesList = [
     "Chiar și 15 minute pe zi pot face o mare diferență. Încearcă să studiezi zilnic, chiar și pentru perioade scurte.",
@@ -29,7 +29,6 @@ class GameProvider extends ChangeNotifier {
   ];
 
   String? _advice;
-
   String get advice {
     if (_advice == null || _advice!.isEmpty) {
       Random random = Random();
@@ -47,20 +46,13 @@ class GameProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _saveJson(Map<String, dynamic> jsonData, String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    String jsonString = jsonEncode(jsonData);
-    await prefs.setString(key, jsonString);
-  }
-
-  Future<Map<String, dynamic>?> _getJson(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    String? jsonString = prefs.getString(key);
-
-    if (jsonString != null) {
-      return jsonDecode(jsonString);
+  Future<void> loadData(bool isFirstOpen) async {
+    if (isFirstOpen) {
+      _subjects = await _subjectService.loadDataFromServer();
+    } else {
+      _subjects = await _subjectService.loadDataFromClient();
     }
-    return null;
+    notifyListeners();
   }
 
   Future<void> saveQuizLevelProgress(Chapter chapter, QuizLevel quizLevel,
@@ -81,7 +73,7 @@ class GameProvider extends ChangeNotifier {
       _unlockNextChapter(foundCategory);
     }
 
-    await _saveProgress();
+    await _subjectService.saveProgress(subjects);
     notifyListeners();
   }
 
@@ -96,32 +88,6 @@ class GameProvider extends ChangeNotifier {
         nextChapter.status = ChapterStatus.inProgress;
       }
     }
-  }
-
-  Future<void> loadDataFromServer() async {
-    final jsonString = await rootBundle.loadString("data/data.json");
-    final data = jsonDecode(jsonString);
-
-    _subjects = (data["subjects"] as List)
-        .map((subjectData) => Subject.fromJson(subjectData))
-        .toList();
-
-    notifyListeners();
-    await _saveProgress();
-  }
-
-  Future<void> loadDataFromClient() async {
-    final jsonData = await _getJson("data");
-
-    if (jsonData != null) {
-      _subjects = (jsonData["subjects"] as List)
-          .map((subjectData) => Subject.fromJson(subjectData))
-          .toList();
-    } else {
-      await loadDataFromServer();
-    }
-
-    notifyListeners();
   }
 
   Future<void> resetProgress() async {
@@ -139,16 +105,9 @@ class GameProvider extends ChangeNotifier {
       }
     }
 
-    await _saveProgress();
+    await _subjectService.saveProgress(subjects);
 
     notifyListeners();
-  }
-
-  Future<void> _saveProgress() async {
-    final jsonData = {
-      "subjects": _subjects.map((subject) => Subject.toJson(subject)).toList(),
-    };
-    await _saveJson(jsonData, "data");
   }
 
   void setNickname(String name) {
