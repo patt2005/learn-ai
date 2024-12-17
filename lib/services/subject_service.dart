@@ -2,44 +2,39 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:lingo_ai_app/models/question_category.dart';
 import 'package:lingo_ai_app/models/subject.dart';
+import 'package:lingo_ai_app/services/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SubjectService {
   Future<List<Subject>> loadDataFromClient() async {
-    final jsonData = await _getJson("data");
-    final questionCategoriesJson = await _getQuestionCategoryJson();
+    final jsonData = await ApiService.instance.getJsonContent("data");
+    final questionCategoriesJson =
+        await ApiService.instance.getJsonContent("question_categories");
+    final progressData = await _getJson("progress") ?? {};
 
-    if (jsonData != null) {
-      List<Subject> subjects = [];
-      for (var subjectData in jsonData["subjects"]) {
-        Subject subject = Subject.fromJson(subjectData);
-        subject.questionCategories =
-            (questionCategoriesJson[subject.id] as List<dynamic>)
-                .map((q) => QuestionCategory.fromJson(q))
-                .toList();
-        subjects.add(subject);
-      }
-      return subjects;
-    } else {
-      return await loadDataFromServer();
+    List<Subject> subjects = [];
+    for (var subjectData in jsonData["subjects"]) {
+      Subject subject = Subject.fromJson(subjectData, progressData);
+      subject.questionCategories =
+          (questionCategoriesJson[subject.id] as List<dynamic>)
+              .map((q) => QuestionCategory.fromJson(q))
+              .toList();
+      subjects.add(subject);
     }
-  }
-
-  Future<Map<String, dynamic>> _getQuestionCategoryJson() async {
-    final jsonString =
-        await rootBundle.loadString("data/question_categories.json");
-    final data = jsonDecode(jsonString);
-    return data;
+    return subjects;
   }
 
   Future<List<Subject>> loadDataFromServer() async {
-    final jsonString = await rootBundle.loadString("data/data.json");
-    final data = jsonDecode(jsonString);
-    final questionCategoriesJson = await _getQuestionCategoryJson();
+    final data = await ApiService.instance.getJsonContent("data");
+    final questionCategoriesJson =
+        await ApiService.instance.getJsonContent("question_categories");
+
+    final dataString = await rootBundle.loadString("data/progress.json");
+    final progressData = jsonDecode(dataString);
 
     List<Subject> subjects = [];
     for (var subjectData in data["subjects"]) {
-      Subject subject = Subject.fromJson(subjectData);
+      Subject subject = Subject.fromJson(subjectData, progressData);
       subject.questionCategories =
           (questionCategoriesJson[subject.id] as List<dynamic>)
               .map((q) => QuestionCategory.fromJson(q))
@@ -53,10 +48,29 @@ class SubjectService {
   }
 
   Future<void> saveProgress(List<Subject> subjects) async {
-    final jsonData = {
-      "subjects": subjects.map((subject) => Subject.toJson(subject)).toList(),
+    final progressData = {
+      "subjects": subjects.map((subject) {
+        return {
+          "id": subject.id,
+          "chapters": subject.chapters.map((chapter) {
+            return {
+              "id": chapter.id,
+              "status": chapter.status.index,
+              "quizLevels": chapter.quizLevels.map((quizLevel) {
+                return {
+                  "title": quizLevel.title,
+                  "isDone": quizLevel.isDone,
+                  "answeredQuestions": quizLevel.answeredQuestions,
+                  "stars": quizLevel.stars,
+                };
+              }).toList(),
+            };
+          }).toList(),
+        };
+      }).toList(),
     };
-    await _saveJson(jsonData, "data");
+
+    await _saveJson(progressData, "progress");
   }
 
   Future<void> _saveJson(Map<String, dynamic> jsonData, String key) async {

@@ -8,7 +8,6 @@
                     "id": "Chapter1",
                     "title": "Capitolul de învățare 1.",
                     "name": "Litere mari ale limbii Române",
-                    "status": 0,
                     "quizLevels": [
                         {
                             "title": "Nivelul 1",
@@ -104,7 +103,6 @@
                     "id": "Chapter2",
                     "title": "Capitolul de învățare 2.",
                     "name": "Litere mici ale limbii Române",
-                    "status": 2,
                     "quizLevels": [
                         {
                             "title": "Nivelul 1",
@@ -200,7 +198,6 @@
                     "id": "Chapter3",
                     "title": "Capitolul de învățare 3.",
                     "name": "Cuvinte din 2 litere",
-                    "status": 2,
                     "quizLevels": [
                         {
                             "title": "Nivelul 1",
@@ -296,7 +293,6 @@
                     "id": "Chapter4",
                     "title": "Capitolul de învățare 4.",
                     "name": "Cuvinte din 3 litere",
-                    "status": 2,
                     "quizLevels": [
                         {
                             "title": "Nivelul 1",
@@ -392,7 +388,6 @@
                     "id": "Chapter5",
                     "title": "Capitolul de învățare 5.",
                     "name": "Cuvinte din 4 litere cu silabe",
-                    "status": 2,
                     "quizLevels": [
                         {
                             "title": "Nivelul 1",
@@ -488,7 +483,6 @@
                     "id": "Chapter6",
                     "title": "Capitolul de învățare 6.",
                     "name": "Cuvinte din 4 litere",
-                    "status": 2,
                     "quizLevels": [
                         {
                             "title": "Nivelul 1",

@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lingo_ai_app/models/chapter.dart';
 import 'package:lingo_ai_app/models/quiz_level.dart';
+import 'package:lingo_ai_app/models/subject.dart';
+import 'package:lingo_ai_app/pages/quiz_page.dart';
 import 'package:lingo_ai_app/utils/colors.dart';
 import 'package:lingo_ai_app/utils/consts.dart';
 import 'package:lingo_ai_app/utils/game_provider.dart';
@@ -13,16 +15,20 @@ class ResultsPage extends StatefulWidget {
   final int answeredQuestions;
   final int totalCoins;
   final int stars;
-  final Chapter category;
+  final Subject subject;
+  final Chapter chapter;
   final QuizLevel quizLevel;
+  final int quizLevelIndex;
 
   const ResultsPage({
     super.key,
     required this.answeredQuestions,
     required this.totalCoins,
     required this.stars,
-    required this.category,
+    required this.chapter,
     required this.quizLevel,
+    required this.subject,
+    required this.quizLevelIndex,
   });
 
   @override
@@ -45,7 +51,7 @@ class _ResultsPageState extends State<ResultsPage> {
     if (widget.stars >= 2) {
       final provider = Provider.of<GameProvider>(context, listen: false);
       await provider.saveQuizLevelProgress(
-        widget.category,
+        widget.chapter,
         widget.quizLevel,
         widget.answeredQuestions,
         widget.stars,
@@ -195,15 +201,30 @@ class _ResultsPageState extends State<ResultsPage> {
                       ),
                       backgroundColor: WidgetStatePropertyAll(kPrimaryColor),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
+                    onPressed: () async {
+                      int index = 0;
+                      if (widget.stars >= 2) {
+                        index = widget.quizLevelIndex + 1;
+                      } else {
+                        index = widget.quizLevelIndex;
+                      }
+                      await Navigator.of(context).pushReplacement(
+                        CupertinoPageRoute(
+                          builder: (context) => QuizPage(
+                              subject: widget.subject,
+                              quizLevelInfo: widget.chapter.quizLevels[index],
+                              chapter: widget.chapter),
+                        ),
+                      );
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Încearcă din nou",
-                          style: TextStyle(
+                          widget.stars >= 2
+                              ? "Următorul nivel"
+                              : "Încearcă din nou",
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 17,
                           ),

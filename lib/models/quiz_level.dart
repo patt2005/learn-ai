@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:lingo_ai_app/utils/consts.dart';
 
 class QuizLevel {
@@ -23,32 +24,26 @@ class QuizLevel {
     this.stars,
   });
 
-  static Map<String, dynamic> toJson(QuizLevel quizLevel) {
-    return {
-      "title": quizLevel.title,
-      "name": quizLevel.name,
-      "isDone": quizLevel.isDone,
-      "timePerQuestion": quizLevel.timePerQuestion,
-      "questions": quizLevel.questions,
-      "questionCategory": quizLevel.questionCategoryId,
-      "options": quizLevel.options,
-      "answeredQuestions": quizLevel.answeredQuestions ?? 0,
-      "stars": quizLevel.stars ?? 0,
-    };
-  }
-
-  static QuizLevel fromJson(Map<String, dynamic> jsonData) {
-    return QuizLevel(
-      questionCategoryId: jsonData["questionCategory"],
-      timePerQuestion: jsonData["timePerQuestion"],
-      questions: jsonData["questions"],
-      options: jsonData["options"],
-      title: jsonData["title"],
-      name: jsonData["name"],
-      isDone: jsonData["isDone"] ?? false,
-      answeredQuestions: jsonData["answeredQuestions"] ?? 0,
-      stars: jsonData["stars"] ?? 0,
-    );
+  static QuizLevel fromJson(
+      Map<String, dynamic> jsonData, Map<String, dynamic> quizLevelProgress) {
+    try {
+      final foundQuizLevel = (quizLevelProgress["quizLevels"] as List<dynamic>)
+          .firstWhere((q) => q["title"] == jsonData["title"]);
+      return QuizLevel(
+        questionCategoryId: jsonData["questionCategory"],
+        timePerQuestion: jsonData["timePerQuestion"],
+        questions: jsonData["questions"],
+        options: jsonData["options"],
+        title: jsonData["title"],
+        name: jsonData["name"],
+        isDone: foundQuizLevel["isDone"],
+        answeredQuestions: foundQuizLevel["answeredQuestions"] ?? 0,
+        stars: foundQuizLevel["stars"] ?? 0,
+      );
+    } catch (error) {
+      debugPrint(error.toString());
+      rethrow;
+    }
   }
 }
 
@@ -75,15 +70,5 @@ class Question {
       questionTYpe: QuestionType.values[jsonData["type"]],
       optionType: OptionType.values[jsonData["optionType"] ?? 0],
     );
-  }
-
-  static Map<String, dynamic> toJson(Question questionData) {
-    return {
-      "asset": questionData.assetFilePath,
-      "answer": questionData.answer,
-      "text": questionData.text,
-      "type": questionData.questionTYpe.index,
-      "optionType": questionData.optionType.index,
-    };
   }
 }

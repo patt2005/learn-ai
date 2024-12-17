@@ -125,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           children: [
-            SizedBox(height: screenSize.height * 0.05),
+            SizedBox(height: screenSize.height * 0.02),
             Consumer<GameProvider>(
               builder: (context, value, child) => Container(
                 padding:
@@ -197,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-            SizedBox(height: screenSize.height * 0.05),
+            SizedBox(height: screenSize.height * 0.02),
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(kPrimaryColor),

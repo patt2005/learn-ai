@@ -148,14 +148,20 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           _questions.length,
           widget.quizLevelInfo.timePerQuestion,
         );
+        final foundChapter =
+            widget.subject.chapters.firstWhere((c) => c == widget.chapter);
+        final index = foundChapter.quizLevels.indexOf(widget.quizLevelInfo);
+
         await Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => ResultsPage(
+              quizLevelIndex: index,
               answeredQuestions: _correntAnswers,
               totalCoins: _totalCoins,
               stars: stars,
-              category: widget.chapter,
+              chapter: widget.chapter,
               quizLevel: widget.quizLevelInfo,
+              subject: widget.subject,
             ),
           ),
         );

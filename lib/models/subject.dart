@@ -13,26 +13,21 @@ class Subject {
     required this.id,
   });
 
-  static Subject fromJson(Map<String, dynamic> jsonData) {
+  static Subject fromJson(
+      Map<String, dynamic> jsonData, Map<String, dynamic> progressData) {
     return Subject(
       id: jsonData["id"],
       name: jsonData["name"],
       chapters: (jsonData["chapters"] as List<dynamic>)
           .map(
-            (e) => Chapter.fromJson(e),
+            (e) => Chapter.fromJson(
+              e,
+              (progressData["subjects"] as List<dynamic>).firstWhere(
+                (s) => s["id"] == jsonData["id"],
+              ),
+            ),
           )
           .toList(),
     );
-  }
-
-  static Map<String, dynamic> toJson(Subject subjectData) {
-    return {
-      "questionCategories": subjectData.questionCategories
-          .map((e) => QuestionCategory.toJson(e))
-          .toList(),
-      "name": subjectData.name,
-      "chapters": subjectData.chapters.map((e) => Chapter.toJson(e)).toList(),
-      "id": subjectData.id,
-    };
   }
 }

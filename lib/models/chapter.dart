@@ -42,24 +42,19 @@ class Chapter {
     }
   }
 
-  static Map<String, dynamic> toJson(Chapter chapterCategory) {
-    return {
-      "title": chapterCategory.title,
-      "name": chapterCategory.name,
-      "status": chapterCategory.status.index,
-      "quizLevels":
-          chapterCategory.quizLevels.map((e) => QuizLevel.toJson(e)).toList(),
-      "id": chapterCategory.id,
-    };
-  }
-
-  static Chapter fromJson(Map<String, dynamic> jsonData) {
+  static Chapter fromJson(
+      Map<String, dynamic> jsonData, Map<String, dynamic> chapterProgress) {
+    final chapter = (chapterProgress["chapters"] as List<dynamic>).firstWhere(
+      (c) => c["id"] == jsonData["id"],
+    );
     return Chapter(
       id: jsonData["id"],
       title: jsonData["title"],
-      status: ChapterStatus.values[jsonData["status"]],
+      status: ChapterStatus.values[chapter["status"]],
       quizLevels: (jsonData["quizLevels"] as List<dynamic>)
-          .map((e) => QuizLevel.fromJson(e as Map<String, dynamic>))
+          .map(
+            (e) => QuizLevel.fromJson(e as Map<String, dynamic>, chapter),
+          )
           .toList(),
       name: jsonData["name"],
     );

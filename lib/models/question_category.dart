@@ -11,16 +11,6 @@ class QuestionCategory {
     required this.questions,
   });
 
-  static Map<String, dynamic> toJson(QuestionCategory questionCategoryInfo) {
-    return {
-      "options": questionCategoryInfo.options,
-      "id": questionCategoryInfo.id,
-      "questions": questionCategoryInfo.questions
-          .map((e) => Question.toJson(e))
-          .toList(),
-    };
-  }
-
   static QuestionCategory fromJson(Map<String, dynamic> jsonData) {
     return QuestionCategory(
       options: jsonData["options"],
